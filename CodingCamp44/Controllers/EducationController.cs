@@ -12,15 +12,15 @@ using System.Threading.Tasks;
 
 namespace CodingCamp44.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class EducationController : BaseController<Education, EducationRepository>
+    public class EducationController : BaseController<Education, EducationRepository, int>
     {
-        EducationRepository educationRepository1;
+        EducationRepository educationRepository;
         public EducationController(EducationRepository educationRepository) : base(educationRepository)
         {
-            this.educationRepository1 = educationRepository;
+            this.educationRepository = educationRepository;
         }
     }
 }

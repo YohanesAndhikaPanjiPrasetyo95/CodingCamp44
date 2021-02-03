@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CodingCamp44.Repositories.Data
 {
-    public class PersonRepository : GeneralRepository<Person, MyContext>
+    public class PersonRepository : GeneralRepository<Person, MyContext, string>
     {
         private readonly MyContext myContext;
         private DbSet<Person> persons;

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CodingCamp44.Repositories
 {
-    public class GeneralRepository<Entity, Context> : IRepository<Entity>
+    public class GeneralRepository<Entity, Context, Id> : IRepository<Entity, Id>
         where Entity : class
         where Context : MyContext
     {
@@ -37,7 +37,7 @@ namespace CodingCamp44.Repositories
             }
         }
 
-        public int Delete(int id)
+        public int Delete(Id id)
         {
             if (entities == null)
             {
@@ -57,31 +57,31 @@ namespace CodingCamp44.Repositories
             return entities.AsEnumerable();
         }
 
-        public Entity Get(int id)
+        public Entity Get(Id id)
         {
             return entities.Find(id);
         }
 
-        public int Update(int id, Entity entity)
+        public int Update(Id id, Entity entity)
         {
             if (entity == null)
             {
-            	throw new ArgumentNullException("entity");
-	    }
+                throw new ArgumentNullException("entity");
+            }
             else
             {
-            	try
-            	{
-                     myContext.Entry(entity).State = EntityState.Modified;
-                        var result = myContext.SaveChanges();
-                        return result;
-                    }
-
-                    catch (Exception)
-                    {
-                        throw;
-                    }
+                try
+                {
+                    myContext.Entry(entity).State = EntityState.Modified;
+                    var result = myContext.SaveChanges();
+                    return result;
                 }
+
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
         }
     }
 }

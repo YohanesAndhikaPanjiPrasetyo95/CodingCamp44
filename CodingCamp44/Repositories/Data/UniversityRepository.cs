@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CodingCamp44.Repositories.Data
 {
-    public class UniversityRepository : GeneralRepository<University, MyContext>
+    public class UniversityRepository : GeneralRepository<University, MyContext, int>
     {
         public UniversityRepository(MyContext myContext) : base(myContext)
         {

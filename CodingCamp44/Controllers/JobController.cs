@@ -1,7 +1,9 @@
 ﻿using CodingCamp44.Base.Controller;
+using CodingCamp44.JWT;
 using CodingCamp44.Models;
 using CodingCamp44.Repositories.Data;
 using CodingCamp44.Repositories.Interfaces;
+using CodingCamp44.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,27 +15,17 @@ using System.Threading.Tasks;
 namespace CodingCamp44.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    //[ApiController]
     [Authorize]
-    public class JobController : BaseController<Job, JobRepository>
+    public class JobController : BaseController<Job, JobRepository, int>
     {
-        private readonly IJwtAuthenticationManager jwtAuthenticationManager;
+        private readonly IJWTAuthenticationManager jwtAuthenticationManager;
         private readonly JobRepository jobRepository;
 
-        public JobController(IJwtAuthenticationManager jwtAuthenticationManager, JobRepository jobRepository) : base(jobRepository)
+        public JobController(IJWTAuthenticationManager jwtAuthenticationManager, JobRepository jobRepository) : base(jobRepository)
         {
             this.jobRepository = jobRepository;
             this.jwtAuthenticationManager = jwtAuthenticationManager;
-        }
-
-        [AllowAnonymous]
-        [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody] UserCred userCred)
-        {
-            var token = jwtAuthenticationManager.Authenticate(userCred.Username, userCred.Password);
-            if (token == null)
-                return Unauthorized();
-            return Ok(token);
         }
     }
 }

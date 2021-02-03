@@ -9,7 +9,7 @@ using static CodingCamp44.Repositories.Data.JobRepository;
 
 namespace CodingCamp44.Repositories.Data
 {
-    public class ProfilingRepository : GeneralRepository<Profiling, MyContext>
+    public class ProfilingRepository : GeneralRepository<Profiling, MyContext, string>
     {
         private readonly MyContext mycontext;
 

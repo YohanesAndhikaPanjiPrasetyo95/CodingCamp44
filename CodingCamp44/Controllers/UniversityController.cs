@@ -15,7 +15,7 @@ namespace CodingCamp44.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class UniversityController : BaseController<University, UniversityRepository>
+    public class UniversityController : BaseController<University, UniversityRepository, int>
     {
         UniversityRepository universityRepository;
         private readonly IJWTAuthenticationManager jWTAuthenticationManager;
@@ -23,23 +23,6 @@ namespace CodingCamp44.Controllers
         { 
             this.universityRepository = universityRepository;
             this.jWTAuthenticationManager = jWTAuthenticationManager;
-        }
-        [AllowAnonymous]
-        [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody] UserCred userCred)
-        {
-            var token = jWTAuthenticationManager.Authenticate(userCred.Username, userCred.Password);
-
-            if (token == null)
-                return Unauthorized();
-
-            return Ok(token);
-        }
-
-        public class UserCred
-        {
-            public string Username { get; set; }
-            public string Password { get; set; }
         }
     }
 }

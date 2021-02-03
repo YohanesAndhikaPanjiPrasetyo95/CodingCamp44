@@ -1,7 +1,7 @@
 ﻿using CodingCamp44.Context;
 using CodingCamp44.Repositories;
 using CodingCamp44.Repositories.Interfaces;
-using CodingCamp44.JWT;
+using CodingCamp44.Handler;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +16,9 @@ namespace CodingCamp44.Base.Controller
     [Route("api/[controller]")]
     [ApiController]
 
-    public class BaseController<Entity, Repository> : ControllerBase
+    public class BaseController<Entity, Repository, Id> : ControllerBase
         where Entity : class
-        where Repository : IRepository<Entity>
+        where Repository : IRepository<Entity, Id>
     {
         private readonly Repository repository;
 
@@ -35,7 +35,7 @@ namespace CodingCamp44.Base.Controller
         }
 
         [HttpGet("{id}")]
-        public ActionResult Get(int id)
+        public ActionResult Get(Id id)
         {
             var data = repository.Get(id);
             return (data != null) ? (ActionResult)Ok(new { data = data, status = "Ok" }) : NotFound(new { data = data, status = "Not Found", errorMessage = "ID is not identified" }); 
@@ -51,7 +51,7 @@ namespace CodingCamp44.Base.Controller
         }
 
         [HttpPut]
-        public ActionResult Update(int id,Entity entity)
+        public ActionResult Update(Id id, Entity entity)
         {
             if (repository.Get(id) != null)
             {
@@ -72,7 +72,7 @@ namespace CodingCamp44.Base.Controller
         }
 
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Id id)
         {
             if (repository.Get(id) == null) 
             {
